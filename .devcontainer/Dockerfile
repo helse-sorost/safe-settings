@@ -16,15 +16,15 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Update npm
 RUN npm install -g npm
-# Intall aws cli
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv2.zip" && \
-  unzip awscliv2.zip && \
-  sudo ./aws/install && \
-  rm -rf ./aws && \
-  rm awscliv2.zip
-# Install sam cli
-RUN curl -L "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-$(dpkg --print-architecture).zip" -o "aws-sam-cli.zip" && \
-  unzip aws-sam-cli.zip -d sam-installation && \
-  sudo ./sam-installation/install && \
-  rm -rf ./sam-installation && \
-  rm aws-sam-cli.zip
+# Intall aws cli (fails and breaks devcontainer creation!)
+# RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv2.zip" && \
+#   unzip awscliv2.zip && \
+#   sudo ./aws/install && \
+#   rm -rf ./aws && \
+#   rm awscliv2.zip
+# # Install sam cli
+# RUN curl -L "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-$(dpkg --print-architecture).zip" -o "aws-sam-cli.zip" && \
+#   unzip aws-sam-cli.zip -d sam-installation && \
+#   sudo ./sam-installation/install && \
+#   rm -rf ./sam-installation && \
+#   rm aws-sam-cli.zip
