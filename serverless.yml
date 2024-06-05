@@ -30,6 +30,6 @@ functions:
       LOG_LEVEL: debug
     events:
       - schedule:
-          rate: rate(30 minutes)
-          enabled: false # set to true to auto-enable
+          rate: rate(4 hours)
+          enabled: true # set to true to auto-enable
           input: {}
