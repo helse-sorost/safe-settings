@@ -266,9 +266,9 @@ And the `checkrun` page will look like this:
 <img width="860" alt="image" src="https://github.com/github/safe-settings/assets/57544838/893ff4e6-904c-4a07-924a-7c23dc068983">
 </p>
 
-### The Settings File
+### The Settings Files
 
-The settings file can be used to set the policies at the `org`, `suborg` or `repo` level.
+The settings files can be used to set the policies at the `org`, `suborg` or `repo` level.
 
 The following can be configured:
 
@@ -284,6 +284,7 @@ The following can be configured:
 - `Autolinks`
 - `Repository name validation` using regex pattern
 - `Rulesets`
+- `Environments` - wait timer, required reviewers, prevent self review, protected branches deployment branch policy, custom deployment branch policy, variables, deployment protection rules
 
 It is possible to provide an `include` or `exclude` settings to restrict the `collaborators`, `teams`, `labels` to a list of repos or exclude a set of repos for a collaborator.
 
