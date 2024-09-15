@@ -28,7 +28,7 @@ describe('Branches', () => {
             enforce_admins: { enabled: false }
           }
         }),
-        updateBranchProtection: jest.fn().mockImplementation(() => Promise.resolve('updateBranchProtection')),
+        updateBranchProtection: jest.fn().mockImplementation(() => Promise.resolve({ url: 'updateBranchProtection' })),
         deleteBranchProtection: jest.fn().mockImplementation(() => Promise.resolve('deleteBranchProtection'))
       }
     }
@@ -204,7 +204,7 @@ describe('Branches', () => {
     })
   })
 
-  describe.skip('return values', () => {
+  describe('return values', () => {
     it('returns updateBranchProtection Promise', () => {
       const plugin = configure(
         [{
