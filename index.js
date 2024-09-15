@@ -375,7 +375,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
   robot.on('repository.edited', async context => {
     const { payload } = context
     const { sender } = payload
-    robot.log.debug('repository.edited payload from ', JSON.stringify(sender))
+    robot.log.debug(sender, 'repository.edited payload from')
 
     if (sender.type === 'Bot') {
       robot.log.debug('Repository Edited by a Bot')
