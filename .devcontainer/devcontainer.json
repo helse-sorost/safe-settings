@@ -1,5 +1,5 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/javascript-node
+// https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
 	"name": "Node.js",
 	"build": {
@@ -10,17 +10,21 @@
 		"args": { "VARIANT": "20-bookworm" }
 	},
 
-	"settings": {},
+	"customizations": {
+		"vscode": {
+			"settings": {},
 
-	"extensions": [
-		"dbaeumer.vscode-eslint",
-		"mikestead.dotenv",
-		"mcright.auto-save",
-		"donjayamanne.git-extension-pack",
-		"redhat.vscode-yaml",
-		"github.copilot",
-		"ms-azuretools.vscode-docker"
-	],
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"mikestead.dotenv",
+				"mcright.auto-save",
+				"donjayamanne.git-extension-pack",
+				"redhat.vscode-yaml",
+				"github.copilot",
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	},
 
 	"portsAttributes": {
 		"3000": {
