@@ -7,7 +7,7 @@ const Branches = require('../../../../lib/plugins/branches')
 describe('Branches', () => {
   let github
   const log = getLog()
-  log.level = 'debug'
+  log.level = process.env.LOG_LEVEL ?? 'info'
 
   function configure (config) {
     const noop = false
