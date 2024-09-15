@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const { Octokit } = require('octokit')
+const { getLog } = require('probot/lib/helpers/get-log')
 const Settings = require('../../../lib/settings')
 const yaml = require('js-yaml')
 // jest.mock('../../../lib/settings', () => {
@@ -21,6 +22,9 @@ describe('Settings Tests', () => {
     const settings = new Settings(false, stubContext, mockRepo, config, mockRef, mockSubOrg)
     return settings;
   }
+
+  const log = getLog()
+  log.level = process.env.LOG_LEVEL ?? 'info'
 
   beforeEach(() => {
     const mockOctokit = jest.mocked(Octokit)
@@ -70,17 +74,7 @@ repository:
         }
       },
       octokit: mockOctokit,
-      log: {
-        debug: jest.fn((msg) => {
-          console.log(msg)
-        }),
-        info: jest.fn((msg) => {
-          console.log(msg)
-        }),
-        error: jest.fn((msg) => {
-          console.log(msg)
-        })
-      }
+      log
     }
 
 

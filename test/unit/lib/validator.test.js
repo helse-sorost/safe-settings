@@ -3,6 +3,7 @@ const DeploymentConfig = require('../../../lib/deploymentConfig')
 const MergeDeep = require('../../../lib/mergeDeep')
 const YAML = require('js-yaml')
 const log = require('pino')('test.log')
+log.level = process.env.LOG_LEVEL ?? 'info'
 
 describe('Validator Tests', () => {
   it('Branch override validator test', () => {
@@ -12,12 +13,12 @@ describe('Validator Tests', () => {
       }
       return true
 
-      // console.log(`Branch override validator, baseconfig ${baseconfig} overrideconfig ${overrideconfig}`)
+      // log.info(`Branch override validator, baseconfig ${baseconfig} overrideconfig ${overrideconfig}`)
       // return false
     })
 
     const configMock = jest.fn((baseconfig) => {
-      console.log(`Branch config validator, baseconfig ${baseconfig}`)
+      log.info(`Branch config validator, baseconfig ${baseconfig}`)
       return false
     })
     DeploymentConfig.overridevalidators = { branches: { canOverride: overrideMock, error: 'Branch overrideValidators.error' } }
@@ -61,7 +62,7 @@ describe('Validator Tests', () => {
       //    expect(() => mergeDeep.mergeDeep(baseconfig, overrideconfig)).toThrow('you are using the wrong JDK');
     } catch (err) {
       expect(err).toBeDefined()
-      console.log(JSON.stringify(err))
+      log.error(err)
       expect(err).toEqual(Error('Branch overrideValidators.error'))
     }
     expect(overrideMock.mock.calls.length).toBe(1)
@@ -69,12 +70,12 @@ describe('Validator Tests', () => {
 
   it('Repository override validator test', () => {
     const overrideMock = jest.fn((baseconfig, overrideconfig) => {
-      console.log(`Repo override validator, baseconfig ${baseconfig} overrideconfig ${overrideconfig}`)
+      log.info(`Repo override validator, baseconfig ${baseconfig} overrideconfig ${overrideconfig}`)
       return false
     })
 
     const configMock = jest.fn((baseconfig) => {
-      console.log(`Repo config validator, baseconfig ${baseconfig}`)
+      log.info(`Repo config validator, baseconfig ${baseconfig}`)
       return false
     })
     DeploymentConfig.overridevalidators = { repository: { canOverride: overrideMock, error: 'Repo overrideValidators.error' } }
@@ -124,12 +125,12 @@ describe('Validator Tests', () => {
 
   it('Repository config validator test', () => {
     const overrideMock = jest.fn((baseconfig, overrideconfig) => {
-      console.log(`Repo override validator, baseconfig ${baseconfig} overrideconfig ${overrideconfig}`)
+      log.info(`Repo override validator, baseconfig ${baseconfig} overrideconfig ${overrideconfig}`)
       return true
     })
 
     const configMock = jest.fn((baseconfig) => {
-      console.log(`Repo config validator, baseconfig ${baseconfig}`)
+      log.info(`Repo config validator, baseconfig ${baseconfig}`)
       return false
     })
     DeploymentConfig.overridevalidators = { repository: { canOverride: overrideMock, error: 'Repo overrideValidators.error' } }
