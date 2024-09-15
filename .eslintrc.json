@@ -12,5 +12,12 @@
     },
     "rules": {
     },
-    "ignorePatterns": ["test/**/*.js"]
+    "overrides": [
+        {
+            "files": ["test/**/*.js"],
+            "env": {
+                "jest": true
+            }
+        }
+    ]
 }
