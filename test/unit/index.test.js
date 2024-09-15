@@ -1,4 +1,5 @@
-const { Probot, ProbotOctokit } = require('probot')
+const { Probot } = require('probot')
+const { getLog } = require('probot/lib/helpers/get-log')
 const plugin = require('../../index')
 
 describe.skip('plugin', () => {
@@ -24,14 +25,13 @@ describe.skip('plugin', () => {
       }
     }
 
-    app = new Probot({ secret: "abcdef", Octokit })
+    app = new Probot({ secret: 'abcdef', Octokit, log: getLog({ level: 'info' }) })
     github = {
       repos: {
         getContents: jest.fn(() => Promise.resolve({ data: { content: '' } }))
       }
     }
     app.auth = () => Promise.resolve(github)
-    app.log = { debug: jest.fn(), error: console.error }
     event = {
       name: 'push',
       payload: JSON.parse(JSON.stringify(require('../fixtures/events/push.settings.json')))
