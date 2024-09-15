@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
 
+const { getLog } = require('probot/lib/helpers/get-log')
 const { when } = require('jest-when')
 const Branches = require('../../../../lib/plugins/branches')
 
 describe('Branches', () => {
   let github
-  const log = jest.fn()
-  log.debug = jest.fn()
-  log.error = jest.fn()
+  const log = getLog()
+  log.level = 'debug'
 
   function configure (config) {
     const noop = false
