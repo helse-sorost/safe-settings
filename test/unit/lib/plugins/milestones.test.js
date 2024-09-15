@@ -1,8 +1,11 @@
+const { getLog } = require('probot/lib/helpers/get-log')
 const Milestones = require('../../../../lib/plugins/milestones')
 
 describe.skip('Milestones', () => {
   let github
 
+  const log = getLog()
+  log.level = process.env.LOG_LEVEL ?? 'info'
   function configure(config) {
     return new Milestones(github, { owner: 'bkeepers', repo: 'test' }, config)
   }
