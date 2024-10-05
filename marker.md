@@ -1,2 +1,3 @@
 - linting and type checking cleanup
 - refactor settings.js
+- updated tests
