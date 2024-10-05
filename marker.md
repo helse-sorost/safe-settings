@@ -1,3 +1,3 @@
 - linting and type checking cleanup: DONE
 - refactor settings.js: DONE
-- updated tests
+- updated tests: DONE
