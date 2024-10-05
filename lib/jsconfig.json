@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "strict": false,
+    "exactOptionalPropertyTypes": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "strictNullChecks": false
+  },
+  "include": ["../index.js", "./**/*", "../test/**/*"]
+}
