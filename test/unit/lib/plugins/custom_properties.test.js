@@ -2,7 +2,6 @@ const CustomProperties = require('../../../../lib/plugins/custom_properties')
 
 describe('CustomProperties', () => {
     let github
-    const repo = { owner: 'owner', repo: 'repo' }
     let log
 
     function configure(config) {
