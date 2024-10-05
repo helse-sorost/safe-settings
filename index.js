@@ -489,7 +489,6 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
       return
     }
     const {
-      head_branch: headBranch,
       head_sha: headSha,
       pull_requests: pullRequests
     } = context.payload.check_suite
@@ -499,7 +498,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
       return
     }
     const pull_request = payload.check_suite.pull_requests[0]
-    return createCheckRun(context, pull_request, headSha, headBranch)
+    return createCheckRun(context, pull_request, headSha)
   })
 
   robot.on('pull_request.opened', async context => {
@@ -518,7 +517,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
       return
     }
     const pull_request = payload.pull_request
-    return createCheckRun(context, pull_request, payload.pull_request.head.sha, payload.pull_request.head.ref)
+    return createCheckRun(context, pull_request, payload.pull_request.head.sha)
   })
 
   robot.on('pull_request.reopened', async context => {
@@ -539,7 +538,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
       robot.log.debug(' Working on the default branch, returning...')
       return
     }
-    return createCheckRun(context, pull_request, payload.pull_request.head.sha, payload.pull_request.head.ref)
+    return createCheckRun(context, pull_request, payload.pull_request.head.sha)
   })
 
   robot.on(['check_suite.rerequested'], async context => {
@@ -617,7 +616,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
       }))
     }
 
-    const subOrgChanges = getChangedSubOrgConfigName(new Glob(`${env.CONFIG_PATH}/suborgs/*.yml`), files, context.repo().owner)
+    const subOrgChanges = getChangedSubOrgConfigName(new Glob(`${env.CONFIG_PATH}/suborgs/*.yml`), files)
     if (subOrgChanges.length) {
       return Promise.all(subOrgChanges.map(suborg => {
         return syncSubOrgSettings(true, context, suborg, context.repo(), pull_request.head.ref)
