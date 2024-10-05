@@ -204,7 +204,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
     })
   }
 
-  async function createCheckRun(context, pull_request, head_sha, head_branch) {
+  async function createCheckRun(context, pull_request, head_sha) {
     const { payload } = context
     // robot.log.debug(`Check suite was requested! for ${context.repo()} ${pull_request.number} ${head_sha} ${head_branch}`)
     const res = await context.octokit.checks.create({
@@ -228,7 +228,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
       const app = await github.apps.getAuthenticated()
       appName = app.data.name
       appSlug = app.data.slug
-      robot.log.debug(`Validated the app is configured properly = \n${JSON.stringify(app.data, null, 2)}`)
+      robot.log.debug(`Validated the app ${appName} is configured properly = \n${JSON.stringify(app.data, null, 2)}`)
     }
   }
 
@@ -438,7 +438,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
         } catch (error) {
           if (error.status === 404) {
             // if the a config file does not exist, create one from the old one
-            const update = await context.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+            await context.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
               owner: payload.repository.owner.login,
               repo: env.ADMIN_REPO,
               path: newPath,
