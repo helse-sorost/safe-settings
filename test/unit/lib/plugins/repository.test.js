@@ -16,7 +16,7 @@ describe('Repository', () => {
   log.debug = jest.fn()
   log.error = jest.fn()
 
-  function configure (config) {
+  function configure(config) {
     const noop = false
     const errors = []
     return new Repository(noop, github, { owner: 'bkeepers', repo: 'test' }, config, 1, log, errors)

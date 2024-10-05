@@ -15,24 +15,24 @@ const repository = {
   }
 }
 
-function loadInstance () {
+function loadInstance() {
   const probot = createProbot({ id: 1, cert: 'test', githubToken: 'test' })
   probot.load(settingsBot)
 
   return probot
 }
 
-function initializeNock () {
+function initializeNock() {
   return nock('https://api.github.com')
 }
 
-function teardownNock (githubScope) {
+function teardownNock(githubScope) {
   expect(githubScope.isDone()).toBe(true)
 
   nock.cleanAll()
 }
 
-function buildPushEvent () {
+function buildPushEvent() {
   return {
     name: 'push',
     payload: {
@@ -43,7 +43,7 @@ function buildPushEvent () {
   }
 }
 
-function buildRepositoryEditedEvent () {
+function buildRepositoryEditedEvent() {
   return {
     name: 'repository.edited',
     payload: {
@@ -53,14 +53,14 @@ function buildRepositoryEditedEvent () {
   }
 }
 
-function buildRepositoryCreatedEvent () {
+function buildRepositoryCreatedEvent() {
   return {
     name: 'repository.created',
     payload: { repository }
   }
 }
 
-function buildTriggerEvent () {
+function buildTriggerEvent() {
   return any.fromList([buildPushEvent(), buildRepositoryCreatedEvent(), buildRepositoryEditedEvent()])
 }
 

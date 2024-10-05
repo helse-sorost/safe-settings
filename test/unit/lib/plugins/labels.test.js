@@ -18,7 +18,7 @@ describe('Labels', () => {
       issues: {
         listLabelsForRepo: {
           endpoint: {
-            merge: jest.fn().mockImplementation(() => {})
+            merge: jest.fn().mockImplementation(() => { })
           }
         },
         createLabel: jest.fn().mockImplementation(() => Promise.resolve()),

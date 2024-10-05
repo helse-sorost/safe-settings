@@ -25,32 +25,32 @@ describe('Settings Tests', () => {
   beforeEach(() => {
     const mockOctokit = jest.mocked(Octokit)
     const content = Buffer.from(`
-suborgrepos:    
-- new-repo        
-#- test*    
-#- secret*  
-     
+suborgrepos:
+- new-repo
+#- test*
+#- secret*
+
 suborgteams:
 - core
 
-suborgproperties:     
+suborgproperties:
 - EDP: true
 - do_no_delete: true
-       
-teams:                 
-  - name: core        
-    permission: bypass 
+
+teams:
+  - name: core
+    permission: bypass
   - name: docss
     permission: pull
   - name: docs
     permission: pull
-  
-validator:
-  pattern: '[a-zA-Z0-9_-]+_[a-zA-Z0-9_-]+.*' 
 
-repository:   
+validator:
+  pattern: '[a-zA-Z0-9_-]+_[a-zA-Z0-9_-]+.*'
+
+repository:
   # A comma-separated list of topics to set on the repository
-  topics:   
+  topics:
   - frontend
      `).toString('base64');
     mockOctokit.repos = {
@@ -200,29 +200,29 @@ repository:
           }
         }
         subOrgConfig = yaml.load(`
-          suborgrepos:    
-          - new-repo         
-               
-          suborgproperties:     
+          suborgrepos:
+          - new-repo
+
+          suborgproperties:
           - EDP: true
           - do_no_delete: true
-                 
-          teams:                 
-            - name: core        
-              permission: bypass 
+
+          teams:
+            - name: core
+              permission: bypass
             - name: docss
               permission: pull
             - name: docs
               permission: pull
-            
+
           validator:
-            pattern: '[a-zA-Z0-9_-]+_[a-zA-Z0-9_-]+.*' 
-          
-          repository:   
+            pattern: '[a-zA-Z0-9_-]+_[a-zA-Z0-9_-]+.*'
+
+          repository:
             # A comma-separated list of topics to set on the repository
-            topics:   
+            topics:
             - frontend
-          
+
           `)
 
       })

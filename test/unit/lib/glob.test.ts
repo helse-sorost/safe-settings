@@ -74,5 +74,4 @@ describe('glob test', function () {
     str = 'java/csrf-protection-disabled'
     expect(str.search(pattern)>=0).toBeTruthy()
   })
-  
 })

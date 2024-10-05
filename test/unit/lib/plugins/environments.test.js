@@ -38,14 +38,14 @@ describe('Environments Plugin test suite', () => {
             variables: []
           }
         })
-        when(github.request)
+      when(github.request)
         .calledWith('GET /repos/:org/:repo/environments/:environment_name/deployment_protection_rules', { org, repo, environment_name })
         .mockResolvedValue({
           data: {
             custom_deployment_protection_rules: []
           }
         })
-      }
+    }
     );
 
     when(github.request)
@@ -698,95 +698,95 @@ describe('Environments Plugin test suite', () => {
         expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments', { org, repo });
 
         ['wait-timer_environment', 'reviewers_environment', 'prevent-self-review_environment', 'deployment-branch-policy_environment', 'deployment-branch-policy-custom_environment', 'variables_environment', 'deployment-protection-rules_environment'].forEach((environment_name) => {
-            expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/variables', { org, repo, environment_name });
+          expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/variables', { org, repo, environment_name });
 
-            expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/deployment_protection_rules', { org, repo, environment_name });
+          expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/deployment_protection_rules', { org, repo, environment_name });
         });
 
         expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'wait-timer_environment',
-            wait_timer: 1
+          org,
+          repo,
+          environment_name: 'wait-timer_environment',
+          wait_timer: 1
         }));
 
         expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'reviewers_environment',
-            reviewers: [
-                {
-                    type: 'User',
-                    id: 1
-                },
-                {
-                    type: 'Team',
-                    id: 2
-                }
-            ]
-        }));
-
-        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'prevent-self-review_environment',
-            prevent_self_review: true
-        }));
-
-        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'prevent-self-review_environment',
-            prevent_self_review: true
-        }));
-
-        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy_environment',
-            deployment_branch_policy: {
-                protected_branches: true,
-                custom_branch_policies: false
+          org,
+          repo,
+          environment_name: 'reviewers_environment',
+          reviewers: [
+            {
+              type: 'User',
+              id: 1
+            },
+            {
+              type: 'Team',
+              id: 2
             }
+          ]
         }));
 
         expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy-custom_environment',
-            deployment_branch_policy: {
-                protected_branches: false,
-                custom_branch_policies: true
-            }
+          org,
+          repo,
+          environment_name: 'prevent-self-review_environment',
+          prevent_self_review: true
+        }));
+
+        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
+          org,
+          repo,
+          environment_name: 'prevent-self-review_environment',
+          prevent_self_review: true
+        }));
+
+        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy_environment',
+          deployment_branch_policy: {
+            protected_branches: true,
+            custom_branch_policies: false
+          }
+        }));
+
+        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy-custom_environment',
+          deployment_branch_policy: {
+            protected_branches: false,
+            custom_branch_policies: true
+          }
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/deployment-branch-policies', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy-custom_environment',
-            name: 'master'
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy-custom_environment',
+          name: 'master'
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/deployment-branch-policies', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy-custom_environment',
-            name: 'dev'
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy-custom_environment',
+          name: 'dev'
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/variables', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'variables_environment',
-            name: 'test',
-            value: 'test'
+          org,
+          repo,
+          environment_name: 'variables_environment',
+          name: 'test',
+          value: 'test'
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/deployment_protection_rules', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-protection-rules_environment',
-            integration_id: 1
+          org,
+          repo,
+          environment_name: 'deployment-protection-rules_environment',
+          integration_id: 1
         }));
       })
     })
@@ -854,59 +854,59 @@ describe('Environments Plugin test suite', () => {
           ]
         },
         {
-            name: 'new-wait-timer',
-            wait_timer: 1
+          name: 'new-wait-timer',
+          wait_timer: 1
         },
         {
-            name: 'new-reviewers',
-            reviewers: [
-                {
-                    type: 'User',
-                    id: 1
-                },
-                {
-                    type: 'Team',
-                    id: 2
-                }
-            ]
-        },
-        {
-            name: 'new-prevent-self-review',
-            prevent_self_review: true
-        },
-        {
-            name: 'new-deployment-branch-policy',
-            deployment_branch_policy: {
-                protected_branches: true,
-                custom_branch_policies: false
+          name: 'new-reviewers',
+          reviewers: [
+            {
+              type: 'User',
+              id: 1
+            },
+            {
+              type: 'Team',
+              id: 2
             }
+          ]
         },
         {
-            name: 'new-deployment-branch-policy-custom',
-            deployment_branch_policy: {
-                protected_branches: false,
-                custom_branch_policies: [
-                    'master',
-                    'dev'
-                ]
+          name: 'new-prevent-self-review',
+          prevent_self_review: true
+        },
+        {
+          name: 'new-deployment-branch-policy',
+          deployment_branch_policy: {
+            protected_branches: true,
+            custom_branch_policies: false
+          }
+        },
+        {
+          name: 'new-deployment-branch-policy-custom',
+          deployment_branch_policy: {
+            protected_branches: false,
+            custom_branch_policies: [
+              'master',
+              'dev'
+            ]
+          }
+        },
+        {
+          name: 'new-variables',
+          variables: [
+            {
+              name: 'test',
+              value: 'test'
             }
+          ]
         },
         {
-            name: 'new-variables',
-            variables: [
-                {
-                    name: 'test',
-                    value: 'test'
-                }
-            ]
-        },
-        {
-            name: 'new-deployment-protection-rules',
-            deployment_protection_rules: [
-                {
-                    app_id: 1
-                }
-            ]
+          name: 'new-deployment-protection-rules',
+          deployment_protection_rules: [
+            {
+              app_id: 1
+            }
+          ]
         }
       ], log, errors);
 
@@ -957,95 +957,95 @@ describe('Environments Plugin test suite', () => {
         expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments', { org, repo });
 
         ['wait-timer_environment', 'reviewers_environment', 'prevent-self-review_environment', 'deployment-branch-policy_environment', 'deployment-branch-policy-custom_environment', 'variables_environment', 'deployment-protection-rules_environment'].forEach((environment_name) => {
-            expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/variables', { org, repo, environment_name });
+          expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/variables', { org, repo, environment_name });
 
-            expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/deployment_protection_rules', { org, repo, environment_name });
+          expect(github.request).toHaveBeenCalledWith('GET /repos/:org/:repo/environments/:environment_name/deployment_protection_rules', { org, repo, environment_name });
         });
 
         expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'wait-timer_environment',
-            wait_timer: 1
+          org,
+          repo,
+          environment_name: 'wait-timer_environment',
+          wait_timer: 1
         }));
 
         expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'reviewers_environment',
-            reviewers: [
-                {
-                    type: 'User',
-                    id: 1
-                },
-                {
-                    type: 'Team',
-                    id: 2
-                }
-            ]
-        }));
-
-        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'prevent-self-review_environment',
-            prevent_self_review: true
-        }));
-
-        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'prevent-self-review_environment',
-            prevent_self_review: true
-        }));
-
-        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy_environment',
-            deployment_branch_policy: {
-                protected_branches: true,
-                custom_branch_policies: false
+          org,
+          repo,
+          environment_name: 'reviewers_environment',
+          reviewers: [
+            {
+              type: 'User',
+              id: 1
+            },
+            {
+              type: 'Team',
+              id: 2
             }
+          ]
         }));
 
         expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy-custom_environment',
-            deployment_branch_policy: {
-                protected_branches: false,
-                custom_branch_policies: true
-            }
+          org,
+          repo,
+          environment_name: 'prevent-self-review_environment',
+          prevent_self_review: true
+        }));
+
+        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
+          org,
+          repo,
+          environment_name: 'prevent-self-review_environment',
+          prevent_self_review: true
+        }));
+
+        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy_environment',
+          deployment_branch_policy: {
+            protected_branches: true,
+            custom_branch_policies: false
+          }
+        }));
+
+        expect(github.request).toHaveBeenCalledWith('PUT /repos/:org/:repo/environments/:environment_name', expect.objectContaining({
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy-custom_environment',
+          deployment_branch_policy: {
+            protected_branches: false,
+            custom_branch_policies: true
+          }
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/deployment-branch-policies', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy-custom_environment',
-            name: 'master'
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy-custom_environment',
+          name: 'master'
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/deployment-branch-policies', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-branch-policy-custom_environment',
-            name: 'dev'
+          org,
+          repo,
+          environment_name: 'deployment-branch-policy-custom_environment',
+          name: 'dev'
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/variables', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'variables_environment',
-            name: 'test',
-            value: 'test'
+          org,
+          repo,
+          environment_name: 'variables_environment',
+          name: 'test',
+          value: 'test'
         }));
 
         expect(github.request).toHaveBeenCalledWith('POST /repos/:org/:repo/environments/:environment_name/deployment_protection_rules', expect.objectContaining({
-            org,
-            repo,
-            environment_name: 'deployment-protection-rules_environment',
-            integration_id: 1
+          org,
+          repo,
+          environment_name: 'deployment-protection-rules_environment',
+          integration_id: 1
         }));
 
         //assert - seven new environments were also added

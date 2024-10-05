@@ -5,7 +5,7 @@ describe('CustomProperties', () => {
     const repo = { owner: 'owner', repo: 'repo' }
     let log
 
-    function configure (config) {
+    function configure(config) {
         const nop = false;
         const errors = []
         return new CustomProperties(nop, github, { owner: 'bkeepers', repo: 'test' }, config, log, errors)

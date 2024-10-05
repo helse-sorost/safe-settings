@@ -6,11 +6,11 @@ describe.skip('plugin', () => {
 
   beforeEach(() => {
     class Octokit {
-      static defaults () {
+      static defaults() {
         return Octokit
       }
 
-      constructor () {
+      constructor() {
         this.config = {
           get: jest.fn().mockReturnValue({})
         }
@@ -19,7 +19,7 @@ describe.skip('plugin', () => {
         }
       }
 
-      auth () {
+      auth() {
         return this
       }
     }

@@ -3,7 +3,7 @@ const Milestones = require('../../../../lib/plugins/milestones')
 describe.skip('Milestones', () => {
   let github
 
-  function configure (config) {
+  function configure(config) {
     return new Milestones(github, { owner: 'bkeepers', repo: 'test' }, config)
   }
 
@@ -13,7 +13,7 @@ describe.skip('Milestones', () => {
       issues: {
         listMilestonesForRepo: {
           endpoint: {
-            merge: jest.fn().mockImplementation(() => {})
+            merge: jest.fn().mockImplementation(() => { })
           }
         },
         createMilestone: jest.fn().mockImplementation(() => Promise.resolve()),

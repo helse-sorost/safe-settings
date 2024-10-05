@@ -9,7 +9,7 @@ describe('Branches', () => {
   log.debug = jest.fn()
   log.error = jest.fn()
 
-  function configure (config) {
+  function configure(config) {
     const noop = false
     const errors = []
     return new Branches(noop, github, { owner: 'bkeepers', repo: 'test' }, config, log, errors)
