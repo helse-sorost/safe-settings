@@ -22,3 +22,13 @@
 - Then, we figure out which `Plugins` that are part of the config for this repo
 - If there is a specific `repoConfig`, we first apply the `repository`-plugin
 - Finally, we apply all the plugins that should be applied for this repo
+
+# On workflows
+
+- `node-ci` runs on all PRs
+- `rc-release` runs on PRs labeled `stage`
+- `create-pre-release` and `create-release` are run manually
+
+I guess the one I want to redo first for my fork is `create-release`.
+
+Probably, I can simplify a lot based on [deploy-ingress.yaml](https://github.com/SPHF-Moderne-Tjenesteutvikling/butikken/blob/main/.github/workflows/deploy-ingress.yaml) from Gnist.
