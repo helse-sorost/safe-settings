@@ -91,7 +91,16 @@ describe('webhooks', () => {
       }
     }
 
-    app = new Probot({ secret: 'abcdef', Octokit, log: getLog({ level: 'info' }) })
+    app = new Probot({
+      secret: 'abcdef', Octokit: ProbotOctokit.defaults((instanceOptions) => {
+        return {
+          ...instanceOptions,
+          retry: { enabled: false },
+          throttle: { enabled: false },
+        };
+      }),
+      log: getLog({ level: 'info' })
+    })
     github = await app.auth()
     event = {
       name: 'push',
