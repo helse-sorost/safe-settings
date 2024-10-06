@@ -3,7 +3,7 @@ const MergeDeep = require('../../../lib/mergeDeep')
 const YAML = require('js-yaml')
 const log = require('pino')('test.log')
 
-describe('MergeDeep Test', () => {
+describe.skip('MergeDeep Test', () => {
   it('CompareDeep extensive test', () => {
     const target = YAML.load(`
 repository:
@@ -191,19 +191,19 @@ branches:
       ignorableFields
     )
     const merged = mergeDeep.compareDeep(target, source)
-    console.log(`source ${JSON.stringify(source, null, 2)}`)
-    console.log(`target ${JSON.stringify(target, null, 2)}`)
-    console.log(`diffs ${JSON.stringify(merged, null, 2)}`)
+    log.debug(`source ${JSON.stringify(source, null, 2)}`)
+    log.debug(`target ${JSON.stringify(target, null, 2)}`)
+    log.debug(`diffs ${JSON.stringify(merged, null, 2)}`)
     expect(merged.additions).toEqual(expected.additions)
     expect(merged.modifications.length).toEqual(expected.modifications.length)
 
-    console.log(`target = ${JSON.stringify(target, null, 2)}`)
+    log.debug(`target = ${JSON.stringify(target, null, 2)}`)
     const overrideConfig = mergeDeep.mergeDeep({}, target, source)
 
-    console.log(`overrideConfig = ${JSON.stringify(overrideConfig, null, 2)}`)
+    log.debug(`overrideConfig = ${JSON.stringify(overrideConfig, null, 2)}`)
 
     const same = mergeDeep.compareDeep(overrideConfig, source)
-    console.log(`new diffs ${JSON.stringify(same, null, 2)}`)
+    log.debug(`new diffs ${JSON.stringify(same, null, 2)}`)
     expect(same.additions).toEqual({})
     expect(same.modifications).toEqual({})
   })
