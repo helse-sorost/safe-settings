@@ -1067,9 +1067,9 @@ describe('nopifyRequest', () => {
   let plugin;
   const org = 'bkeepers';
   const repo = 'test';
-  const environment_name = 'test-environment';
+  const environmentName = 'test-environment';
   const url = 'PUT /repos/:org/:repo/environments/:environment_name';
-  const options = { org, repo, environment_name, wait_timer: 1 };
+  const options = { org, repo, environment_name: environmentName, wait_timer: 1 };
   const description = 'Update environment wait timer';
 
   beforeEach(() => {
