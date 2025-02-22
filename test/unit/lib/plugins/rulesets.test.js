@@ -8,7 +8,7 @@ const repoConditions = {
   ref_name: {
     include: ['~ALL'],
     exclude: []
-  },
+  }
 }
 const orgConditions = {
   ref_name: {
@@ -16,18 +16,18 @@ const orgConditions = {
     exclude: []
   },
   repository_name: {
-    include: ["~ALL"],
-    exclude: ["admin"]
+    include: ['~ALL'],
+    exclude: ['admin']
   }
 }
 
-function generateRequestRuleset(id, name, conditions, checks, org=false) {
+function generateRequestRuleset (id, name, conditions, checks, org = false) {
   request = {
-    id: id,
-    name: name,
+    id,
+    name,
     target: 'branch',
     enforcement: 'active',
-    conditions: conditions,
+    conditions,
     rules: [
       {
         type: 'required_status_checks',
@@ -49,13 +49,13 @@ function generateRequestRuleset(id, name, conditions, checks, org=false) {
   return request
 }
 
-function generateResponseRuleset(id, name, conditions, checks, org=false) {
+function generateResponseRuleset (id, name, conditions, checks, org = false) {
   response = {
-    id: id,
-    name: name,
+    id,
+    name,
     target: 'branch',
     enforcement: 'active',
-    conditions: conditions,
+    conditions,
     rules: [
       {
         type: 'required_status_checks',
@@ -65,7 +65,7 @@ function generateResponseRuleset(id, name, conditions, checks, org=false) {
         }
       }
     ],
-    headers: version,
+    headers: version
   }
   if (org) {
     response.source_type = 'Organization'
@@ -87,7 +87,7 @@ describe('Rulesets', () => {
   log.debug = jest.fn()
   log.error = jest.fn()
 
-  function configure (config, scope='repo') {
+  function configure (config, scope = 'repo') {
     const noop = false
     const errors = []
     return new Rulesets(noop, github, { owner: 'jitran', repo: 'test' }, config, log, errors, scope)
@@ -102,7 +102,7 @@ describe('Rulesets', () => {
           }
         })
       },
-      request: jest.fn().mockImplementation(() => Promise.resolve('request')),
+      request: jest.fn().mockImplementation(() => Promise.resolve('request'))
     }
 
     github.request.endpoint = {
@@ -110,7 +110,7 @@ describe('Rulesets', () => {
         method: 'GET',
         url: '/repos/jitran/test/rulesets',
         headers: version
-        }
+      }
       )
     }
   })
