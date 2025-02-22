@@ -10,7 +10,7 @@ on:
 #      - main-enterprise
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: ${{ secrets.REGISTRY }}
   IMAGE_NAME: ${{ github.repository }}
 
 permissions:
@@ -21,6 +21,7 @@ jobs:
   build:
     if: ${{ github.actor != 'dependabot'}}
     runs-on: ubuntu-latest
+    environment: create-release
     outputs:
       release: ${{ inputs.version }} # ${{ steps.prerelease.outputs.release }}
     steps:
@@ -34,15 +35,15 @@ jobs:
 
       - run: npm install
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+      - name: Log in to Azure using OIDC
+        uses: azure/login@v2
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to an Azure Container Registry through the Docker CLI
+        run: az acr login --name ${{ env.REGISTRY }}
 
       - name: Build Docker Image Locally
         uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
@@ -73,47 +74,5 @@ jobs:
       #     bump: final
       - name: Push Docker Image
         if: ${{ success() }}
-        uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.version }}
-          platforms: linux/amd64,linux/arm64
-          provenance: false
-          sbom: false
-
-  helm:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Clone repo
-        uses: actions/checkout@v4
-
-      - name: Prepare
         run: |
-          # OCI standard enforces lower-case paths
-          GHCR_REPO=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          HELM_REPO=$(echo "oci://ghcr.io/${{ github.repository_owner }}/helm-charts" | tr '[:upper:]' '[:lower:]')
-          echo "GHCR_REPO=$GHCR_REPO" >> $GITHUB_ENV
-          echo "HELM_REPO=$HELM_REPO" >> $GITHUB_ENV
-
-      - name: Publish Helm charts
-        run: |
-          cd helm
-          helm registry login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
-          helm package --app-version ${{ needs.build.outputs.release }} --version ${{ needs.build.outputs.release }} safe-settings
-          helm push safe-settings-${{ needs.build.outputs.release }}.tgz ${{ env.HELM_REPO }}
-
-  #trigger-deployment:
-  #  needs: build
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #  - uses: actions/checkout@v2
-  #  - uses: decyjphr-actions/workflow-trigger@v0.1-alpha
-  #    with:
-  #      workflow: deploy-k8s.yml
-  #      token: ${{ secrets.pat }}
-  #      ref: ${{ github.event.pull_request.head.ref || github.ref }}
-  #      inputs: '{"release": "${{needs.build.outputs.release}}", "status": "passed" }'
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${RELEASE_VERSION}
