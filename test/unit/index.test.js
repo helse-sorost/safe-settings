@@ -1,4 +1,4 @@
-const { Probot } = require('probot')
+const { Probot, ProbotOctokit } = require('probot')
 const { getLog } = require('probot/lib/helpers/get-log')
 const plugin = require('../../index')
 const env = require('../../lib/env')
@@ -90,8 +90,19 @@ describe('webhooks', () => {
         return this
       }
     }
+    console.log(Octokit) // Temporary, to silence eslint warnings
 
-    app = new Probot({ secret: 'abcdef', Octokit, log: getLog({ level: 'info' }) })
+    app = new Probot({
+      secret: 'abcdef',
+      Octokit: ProbotOctokit.defaults((instanceOptions) => {
+        return {
+          ...instanceOptions,
+          retry: { enabled: false },
+          throttle: { enabled: false }
+        }
+      }),
+      log: getLog({ level: 'info' })
+    })
     github = await app.auth()
     event = {
       name: 'push',
