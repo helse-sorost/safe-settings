@@ -1,5 +1,4 @@
 const Archive = require('../../../../lib/plugins/archive');
-const NopCommand = require('../../../../lib/nopcommand');
 
 describe('Archive Plugin', () => {
   let github;

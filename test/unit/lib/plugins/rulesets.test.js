@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 
-const { when } = require('jest-when')
 const Rulesets = require('../../../../lib/plugins/rulesets')
 const version = {
   'X-GitHub-Api-Version': '2022-11-28'
