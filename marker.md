@@ -1,1 +1,1 @@
-- linting and type checking cleanup
+- linting and type checking cleanup: DONE
