@@ -6,11 +6,12 @@ const Glob = require('./lib/glob')
 const ConfigManager = require('./lib/configManager')
 const NopCommand = require('./lib/nopcommand')
 const env = require('./lib/env')
+const Settings = require('./lib/settings')
 const ResultHandler = require('./resultHandler')
 
 let deploymentConfig
 
-module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) => {
+module.exports = (robot) => {
   let appSlug = 'safe-settings'
   async function syncAllSettings (nop, context, repo = context.repo(), ref) {
     try {
