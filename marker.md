@@ -1,1 +1,2 @@
 - linting and type checking cleanup: DONE
+- refactor settings.js
