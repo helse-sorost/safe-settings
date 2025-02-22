@@ -6,6 +6,7 @@ const Glob = require('./lib/glob')
 const ConfigManager = require('./lib/configManager')
 const NopCommand = require('./lib/nopcommand')
 const env = require('./lib/env')
+const ResultHandler = require('./resultHandler')
 
 let deploymentConfig
 
@@ -26,14 +27,10 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
       }
     } catch (e) {
       if (nop) {
-        let filename = env.SETTINGS_FILE_PATH
-        if (!deploymentConfig) {
-          filename = env.DEPLOYMENT_CONFIG_FILE
-          deploymentConfig = {}
-        }
+        const filename = env.SETTINGS_FILE_PATH
         const nopcommand = new NopCommand(filename, repo, null, e, 'ERROR')
         robot.log.error(`NOPCOMMAND ${JSON.stringify(nopcommand)}`)
-        Settings.handleError(nop, context, repo, deploymentConfig, ref, nopcommand)
+        handleError(nop, context, repo, nopcommand)
       } else {
         throw e
       }
@@ -58,7 +55,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
         }
         const nopcommand = new NopCommand(filename, repo, null, e, 'ERROR')
         robot.log.error(`NOPCOMMAND ${JSON.stringify(nopcommand)}`)
-        Settings.handleError(nop, context, repo, deploymentConfig, ref, nopcommand)
+        handleError(nop, context, repo, nopcommand)
       } else {
         throw e
       }
@@ -83,7 +80,7 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
         }
         const nopcommand = new NopCommand(filename, repo, null, e, 'ERROR')
         robot.log.error(`NOPCOMMAND ${JSON.stringify(nopcommand)}`)
-        Settings.handleError(nop, context, repo, deploymentConfig, ref, nopcommand)
+        handleError(nop, context, repo, nopcommand)
       } else {
         throw e
       }
@@ -109,12 +106,19 @@ module.exports = (robot, { getRouter }, Settings = require('./lib/settings')) =>
         }
         const nopcommand = new NopCommand(filename, repo, null, e, 'ERROR')
         robot.log.error(`NOPCOMMAND ${JSON.stringify(nopcommand)}`)
-        Settings.handleError(nop, context, repo, deploymentConfig, ref, nopcommand)
+        handleError(nop, context, repo, nopcommand)
       } else {
         throw e
       }
     }
   }
+
+  async function handleError (nop, context, repo, nopcommand) {
+    const results = new ResultHandler(nop, context, repo)
+    results.appendToResults([nopcommand])
+    await results.handleResults([]) // TODO: figure out if not passing this.errors is a problem (I believe it would have been an empty array anyways, but make sure to figure that logic out...)
+  }
+
   /**
    * Loads the deployment config file from file system
    * Do this once when the app starts and then return the cached value
