@@ -1,6 +1,10 @@
 name: Create a release
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: The version to name to use then pushing to the container registry
 #  push:
 #    branches:
 #      - main-enterprise
@@ -18,23 +22,28 @@ jobs:
     if: ${{ github.actor != 'dependabot'}}
     runs-on: ubuntu-latest
     outputs:
-      release: ${{ steps.finalrelease.outputs.release }}
+      release: ${{ inputs.version }} # ${{ steps.prerelease.outputs.release }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 16.x
           cache: "npm"
+
       - run: npm install
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5
+
       - name: Log in to the Container registry
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build Docker Image Locally
         uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
         with:
@@ -43,20 +52,25 @@ jobs:
           load: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main-enterprise
+
       - name: Inspect the Docker Image
         run: |
           docker image inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main-enterprise
-      - name: Run Functional Tests
-        id: functionaltest
-        run: |
-          docker run --env APP_ID=${{ secrets.APP_ID }} --env PRIVATE_KEY=${{ secrets.PRIVATE_KEY }} --env WEBHOOK_SECRET=${{ secrets.WEBHOOK_SECRET }} -d -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main-enterprise
-          sleep 10
-          curl http://localhost:3000
-      - name: Tag a final release
-        id: finalrelease
-        uses: actionsdesk/semver@82aa4310e4e21c59cd0020007a4278e733e81dcb
-        with:
-          bump: final
+
+      # Not sure if  this actually does anything, also I don't have the setup yet. Let's skip it for now (the primary testing happens in CI anyways).
+      # - name: Run Functional Tests
+      #   id: functionaltest
+      #   run: |
+      #     docker run --env APP_ID=${{ secrets.APP_ID }} --env PRIVATE_KEY=${{ secrets.PRIVATE_KEY }} --env WEBHOOK_SECRET=${{ secrets.WEBHOOK_SECRET }} -d -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main-enterprise
+      #     sleep 10
+      #     curl http://localhost:3000
+
+      # The repo for this action is archived. Doing the version manually for now.
+      # - name: Tag a final release
+      #   id: finalrelease
+      #   uses: actionsdesk/semver@82aa4310e4e21c59cd0020007a4278e733e81dcb
+      #   with:
+      #     bump: final
       - name: Push Docker Image
         if: ${{ success() }}
         uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
@@ -65,7 +79,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.finalrelease.outputs.release }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.version }}
           platforms: linux/amd64,linux/arm64
           provenance: false
           sbom: false
