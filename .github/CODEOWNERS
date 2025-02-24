@@ -1,0 +1,10 @@
+# Default codeowner is auto set by GitHub vending
+* @helse-sorost/admin-codeowner
+
+# Owners for specific folders can be added here by updating config in repo github-vending.
+
+# Codeowner for .github is auto set by GitHub vending
+/.github/ @helse-sorost/admin-codeowner-github
+
+# .github/CODEOWNERS should only be changed by updating config in repo github-vending, thus the owner is set to "CODEOWNERS no-one"
+/.github/CODEOWNERS @helse-sorost/codeowners-no-one
